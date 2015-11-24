@@ -78,4 +78,7 @@ window.fbAsyncInit = function() {
 // This function is called when we KNOW the user is logged on.
 var loggedOn = function() {
 	setFacebookStatus("You're in");
+  FB.api('/me', function(response) {
+	setScopeVar("userName", response.name);
+});
 };

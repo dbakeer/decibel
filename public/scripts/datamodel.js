@@ -9,10 +9,12 @@ var myApp = angular.module("myApp", []);
 // data model.
 myApp.controller("facebookCtrl", function($scope) {
 
-	// For now, have one string in the data model,
-	// fbStatus. It will contain the status of the
-	// Facebook communication
+  // Status of Facebook communications
 	$scope.fbStatus = "";
+
+	// Name of the connected person
+	$scope.userName = "";
+
 });
 
 
@@ -21,7 +23,11 @@ myApp.controller("facebookCtrl", function($scope) {
 // the JavaScript code would be able to set the value of
 // $scope.fbStatus without having to know anything about
 // Angular.
-var setFacebookStatus = function(status) {
+// This function sets the a scope variable to a value.
+// It is useful to have this function so that the rest of
+// the JavaScript code would be able do this without relying
+// on Angular
+var setScopeVar = function(variable, value) {
 	var scope = angular.element($("#facebookCtrl")).scope();
 
 	// scope.$apply takes a function because of re-entrancy.
@@ -29,6 +35,11 @@ var setFacebookStatus = function(status) {
 	// scope variable immediately, in which case the function
 	// will be executed later.
 	scope.$apply(function() {
-		scope.fbStatus = status;
+		scope[variable] = value;
 	});
+};
+
+
+var setFacebookStatus = function(status) {
+	setScopeVar("fbStatus", status);
 };
