@@ -3,6 +3,9 @@ module.exports = function(server, passport) {
     res.render('index.ejs');
   });
 
+  ////////////////////////////
+  /////// LOCAL LOGIN ////////
+  ////////////////////////////
   server.get('/signup', function(req, res){
     res.render('signup.ejs', { message: req.flash('signupMessage')});
   });
@@ -23,12 +26,30 @@ module.exports = function(server, passport) {
     failureFlash: true
   }));
 
+  server.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+  });
 
   server.get('/profile', isLoggedIn, function(req, res){
     res.render('profile.ejs', {
       user : req.user
     });
   });
+
+  ////////////////////////////
+  ///// FACEBOOK LOGIN ///////
+  ////////////////////////////
+  server.get('/auth/facebook', passport.authenticate('facebook',
+  {
+    scope: 'email'
+  }));
+
+  server.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+      successRedirect: '/profile',
+      failureRedirect: '/'
+    }));
 
   server.get('/logout', function(req, res){
     req.logout();
