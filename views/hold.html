@@ -1,0 +1,49 @@
+<!-- writing the template -->
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <title>Friendly</title>
+    <!--  Use jQuery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+    </script>
+
+    <!-- Use the Bootstrap theme -->
+    <link rel="stylesheet"
+    	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js">
+    </script>
+
+    <!--  Use the Angular library  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js">
+    </script>
+
+    <!-- Use the application's scripts -->
+    <script src="scripts/facebook.js">
+    </script>
+    <script src="scripts/datamodel.js">
+    </script>
+    <script src="scripts/angular.js"></script>
+
+  </head>
+  <body>
+
+    <!-- Everything in the body is part of the myApp
+    			Angular application -->
+    <body ng-app="FriendApp">
+    <!--  Everything in this div has access to the scope variables
+    	  in facebookCtrl (defined in datamodel.js)  -->
+    	<div ng-controller="facebookCtrl" id="facebookCtrl">
+
+        <fb:login-button scope="public_profile,email"
+        	onlogin="checkLoginState();" ng-if="userName == ''">
+        Login
+        </fb:login-button>
+        <div ng-if="userName != ''">
+        Hello {{userName}}
+        </div>
+    </body>
+</html>
