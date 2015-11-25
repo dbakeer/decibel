@@ -11,6 +11,13 @@ var userSchema = mongoose.Schema({
     token: String,
     email: String,
     name: String
+  },
+  info: {
+    gender: String,
+    age: Number,
+    bio: String,
+    friend_type: Array,
+    interests: Array
   }
 });
 
