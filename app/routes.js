@@ -3,13 +3,26 @@ module.exports = function(server, passport) {
     res.render('index.ejs');
   });
 
-  server.get('/login', function(req, res){
-    res.render('login.ejs', { message: req.flash(loginMessage)});
-  });
-
   server.get('/signup', function(req, res){
     res.render('signup.ejs', { message: req.flash('signupMessage')});
   });
+
+  server.post('/signup', passport.authenticate('local-signup',{
+    successRedirect: '/profile',
+    failureRedirect: '/signup',
+    failureFlash: true
+  }));
+
+  server.get('/login', function(req, res){
+    res.render('login.ejs', { message: req.flash('loginMessage')});
+  });
+
+  server.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/profile',
+    failureRedirect: '/login',
+    failureFlash: true
+  }));
+
 
   server.get('/profile', isLoggedIn, function(req, res){
     res.render('profile.ejs', {
@@ -24,7 +37,7 @@ module.exports = function(server, passport) {
 };
 
 function isLoggedIn(req, res, next) {
-  if(req.isAuthenicated()){
+  if(req.isAuthenticated()){
     return next();
   } else {
     res.redirect('/');

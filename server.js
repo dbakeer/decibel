@@ -36,6 +36,7 @@ server.use(passport.session());
 server.use(flash());
 
 require('./app/routes.js')(server, passport);
+require('./config/passport')(passport);
 
 server.listen(port);
 console.log('HEY, LISTEN!');
