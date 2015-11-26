@@ -107,7 +107,7 @@ module.exports = function(server, passport) {
   }));
 
   // FACEBOOK
-  server.get('/connect/facebook', passport.authorize('facebook', { scope: 'email'}));
+  server.get('/connect/facebook', passport.authorize('facebook', { scope: ['email', 'public_profile', 'user_location']}));
 
   server.get('/connect/facebook/callback', passport.authorize('facebook', {
     successRedirect: '/profile',

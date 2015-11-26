@@ -110,6 +110,7 @@ module.exports = function(passport) {
               user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
               user.facebook.gender = profile.gender;
               user.facebook.picture = profile.photos[0].value;
+              user.facebook.location = profile.user_location;
 
               user.save(function(err){
                 if (err)
@@ -126,6 +127,7 @@ module.exports = function(passport) {
             newUser.facebook.email = profile.emails[0].value;
             newUser.facebook.gender = profile.gender;
             newUser.facebook.picture = profile.photos[0].value;
+            newUser.facebook.location = profile.user_location;
 
             newUser.save(function(err) {
               if (err)
@@ -144,6 +146,7 @@ module.exports = function(passport) {
         user.facebook.email = profile.emails[0].value;
         user.facebook.gender = profile.gender;
         user.facebook.picture = profile.photos[0].value;
+        user.facebook.location = profile.user_location;
 
         user.save(function(err) {
           if (err)

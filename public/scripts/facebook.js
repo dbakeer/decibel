@@ -43,5 +43,6 @@ var loggedOn = function() {
 	setFacebookStatus("You're in");
   FB.api('/me', function(res) {
 	setScopeVar("username", res.name);
+	console.log("location", res.location.name);
 });
 };
