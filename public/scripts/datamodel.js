@@ -1,4 +1,4 @@
-var app = angular.module("FriendApp", []);
+var app = angular.module("friendApp", []);
 
 app.controller("facebookCtrl", function($scope) {
 

@@ -26,6 +26,8 @@ server.use(bodyParser.json({type: 'application/vnd.api+json'}));
 
 server.set('view engine', 'ejs');
 server.set('views', __dirname + '/views');
+server.set('public', __dirname + '/public');
+server.set('scripts', __dirname + '/public/scripts');
 
 mongoose.connect(MONGOURI + dbname);
 

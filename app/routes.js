@@ -64,6 +64,12 @@ module.exports = function(server, passport) {
     });
   });
 
+  server.get('/form', isLoggedIn, function(req, res){
+    res.render('form.ejs', {
+      user : req.user
+    });
+  });
+
   ////////////////////////////
   ///// FACEBOOK LOGIN ///////
   ////////////////////////////

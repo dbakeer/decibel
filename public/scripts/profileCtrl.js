@@ -1,29 +1,20 @@
-// defining AngularJS logic
-
-var app = angular.module('friendApp', []);
-
-/////////////////////////////////
-///////// MATCH FACTORY /////////
-/////////////////////////////////
-app.factory('profiles', [function(){
-  var list = {
-    profiles: []
-  };
-  return list;
-}]);
-
 /////////////////////////////////
 /////// PROFILE CONTROLLER //////
 /////////////////////////////////
+var profileCtrl = angular.module('profileCtrl', []);
 
 // this controller takes care of observing the matches you prefer
-app.controller('ProfileCtrl', ['$scope', 'profiles', 'filterFilter', function($scope, profiles, filterFilter){
+profileCtrl.controller('profileCtrl', ['$scope', 'profiles', 'filterFilter', function($scope, profiles, filterFilter){
 
+  var userData = {
+    location: $scope.location,
+    age: $scope.age,
+    friend_types: [$scope.friend_types],
+    bio: $scope.bio
+  };
   $scope.profiles = profiles.profiles;
 
   $scope.username = '';
-
-  $scope.location = '';
 
   $scope.gender = [
     'Male',
@@ -68,4 +59,3 @@ app.controller('ProfileCtrl', ['$scope', 'profiles', 'filterFilter', function($s
       about: $scope.about
     });
   };
-}]);
