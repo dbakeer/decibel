@@ -1,13 +1,10 @@
-// Angular data model
 var app = angular.module("FriendApp", []);
 
-myApp.controller("facebookCtrl", function($scope) {
+app.controller("facebookCtrl", function($scope) {
 
-  // Status of Facebook communications
 	$scope.fbStatus = "";
 
-	// Name of the connected person
-	$scope.userName = "";
+	$scope.username = "";
 
 });
 

@@ -1,23 +1,28 @@
 ////////////////////////////////////
 /////////// DEPENDENCIES ///////////
 ////////////////////////////////////
-var express      = require('express'),
-    mongoose     = require('mongoose'),
-    port         = process.env.PORT || 3000,
-    MONGOURI     = process.env.MONGOLAB_URI || "mongodb://localhost:27017",
-    dbname       = "/friendr",
-    db           = mongoose.connection,
-    passport     = require('passport'),
-    flash        = require('connect-flash'),
-    morgan       = require('morgan'),
-    cookieParser = require('cookie-parser'),
-    bodyParser   = require('body-parser'),
-    session      = require('express-session'),
-    server       = express();
+var express        = require('express'),
+    mongoose       = require('mongoose'),
+    port           = process.env.PORT || 3000,
+    MONGOURI       = process.env.MONGOLAB_URI || "mongodb://localhost:27017",
+    dbname         = "/friendr",
+    db             = mongoose.connection,
+    passport       = require('passport'),
+    flash          = require('connect-flash'),
+    morgan         = require('morgan'),
+    cookieParser   = require('cookie-parser'),
+    bodyParser     = require('body-parser'),
+    session        = require('express-session'),
+    methodOverride = require('method-override'),
+    server         = express();
 
 server.use(morgan('dev'));
+server.use(methodOverride('_method'));
 server.use(cookieParser());
 server.use(bodyParser());
+server.use(bodyParser.urlencoded({extended:true}));
+server.use(bodyParser.text());
+server.use(bodyParser.json({type: 'application/vnd.api+json'}));
 
 server.set('view engine', 'ejs');
 server.set('views', __dirname + '/views');

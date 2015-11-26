@@ -18,10 +18,9 @@ function statusChangeCallback(response) {
 window.fbAsyncInit = function() {
 	FB.init({
 		appId      : '1806386009588489',
-		cookie     : true,  // enable cookies to allow the server to access
-							// the session
-		xfbml      : true,  // parse social plugins on this page
-		version    : 'v2.2' // use version 2.2
+		cookie     : true,
+		xfbml      : true,
+		version    : 'v2.2'
 	});
 
 	checkLoginState();
@@ -42,7 +41,7 @@ window.fbAsyncInit = function() {
 
 var loggedOn = function() {
 	setFacebookStatus("You're in");
-  FB.api('/me', function(response) {
-	setScopeVar("userName", response.name);
+  FB.api('/me', function(res) {
+	setScopeVar("username", res.name);
 });
 };

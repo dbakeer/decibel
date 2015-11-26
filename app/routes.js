@@ -1,6 +1,33 @@
+var mongoose = require('mongoose'),
+    User     = require('./models/user.js');
+
 module.exports = function(server, passport) {
   server.get('/', function(req, res){
     res.render('index.ejs');
+  });
+
+  server.get('/user', function(req, res){
+    var query = User.find({});
+
+    query.exec(function(err, users){
+      if (err) {
+        res.send(err);
+      } else {
+        res.json(users);
+      }
+    });
+  });
+
+  server.post('/user', function(req, res){
+    var newUser = new User(req.body);
+
+    newUser.save(function(err){
+      if(err){
+        res.send(err);
+      } else {
+        res.json(req.body);
+      }
+    });
   });
 
   ////////////////////////////
@@ -40,9 +67,17 @@ module.exports = function(server, passport) {
   ////////////////////////////
   ///// FACEBOOK LOGIN ///////
   ////////////////////////////
-  server.get('/auth/facebook', passport.authenticate('facebook',
-  {
+  server.get('/auth/facebook', passport.authenticate('facebook', { scope:  'email' }));
+
+  server.get('/auth/facebook',
+  passport.authenticate('facebook', {
+    authType: 'rerequest',
     scope: 'email'
+  }));
+
+  server.get('/auth/facebook', passport.authenticate('facebook', {
+    authType: 'reauthenicate',
+    authNonce: 'foo123'
   }));
 
   server.get('/auth/facebook/callback',
