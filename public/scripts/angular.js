@@ -3,27 +3,11 @@
 var app = angular.module('friendApp', []);
 
 /////////////////////////////////
-///////// MATCH FACTORY /////////
-/////////////////////////////////
-// app.factory('profiles', [function(){
-//   var list = {
-//     profiles: []
-//   };
-//   return list;
-// }]);
-
-/////////////////////////////////
 /////// PROFILE CONTROLLER //////
 /////////////////////////////////
 
 // this controller takes care of observing the matches you prefer
-app.controller('profileCtrl', ['$scope', 'filterFilter', function($scope, filterFilter){
-
-  $scope.profiles = profiles.profiles;
-
-  $scope.username = '';
-
-  $scope.location = '';
+app.controller('profileCtrl', ['$scope', 'filterFilter', '$http', function($scope, filterFilter, $http){
 
   $scope.gender = [
     'Male',
@@ -59,13 +43,21 @@ app.controller('profileCtrl', ['$scope', 'filterFilter', function($scope, filter
   }, true);
 
   $scope.addProfile = function(){
-    $scope.profiles.push({
-      username: $scope.username,
-      location: $scope.location,
+    var userData = {
+      username: $scope.age,
+      // location: $scope.location,
       gender: $scope.gender,
       interests: $scope.interests,
       friend_types: $scope.friend_types,
-      about: $scope.about
+      about: $scope.bio
+    };
+
+    $http.post('/users', userData).success(function(data){
+      console.log(data);
+    }).error(function(data){
+      console.log(data);
+    }).success(function(data){
+      console.log(data);
     });
   };
 }]);
