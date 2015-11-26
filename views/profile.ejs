@@ -9,6 +9,10 @@
 
     <!-- GOOGLE FONTS -->
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <!-- JAVASCRIPTZ -->
+    <script src="../public/scripts/angular.js"></script>
+
   </head>
 
 
@@ -27,9 +31,7 @@
 
             <% if (user.local.email) { %>
               <p>
-                <strong>id</strong>: <%= user._id %><br>
                 <strong>email</strong>: <%= user.local.email %><br>
-                <strong>password</strong>: <%= user.local.password %>
               </p>
 
               <a href="/unlink/local" class="btn btn-default">Unlink</a>
@@ -46,12 +48,9 @@
 
               <% if (user.facebook.token) { %>
                 <p>
-                  <strong>id</strong>: <%= user.facebook.id %><br>
-                  <strong>token</strong>: <%= user.facebook.token %><br>
                   <strong>email</strong>: <%= user.facebook.email %><br>
                   <strong>name</strong>: <%= user.facebook.name %><br>
                   <strong>gender</strong>: <%= user.facebook.gender %><br>
-                  <strong>location</strong>: <%= user.facebook.location.name %><br>
                   <strong>picture</strong>: <img src="<%= user.facebook.picture %>"><br>
                 </p>
 
