@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    bcrypt   = require('bcrypt-nodejs');
+    bcrypt   = require('bcrypt-nodejs'),
+    Profile  = require('./profile.js');
 
 var userSchema = mongoose.Schema({
   local: {
@@ -26,15 +27,3 @@ userSchema.methods.validPassword = function(password) {
 };
 
 module.exports = mongoose.model('User', userSchema);
-
-var mongoose = require('mongoose'),
-    Schema   = mongoose.Schema;
-
-var Profile = mongoose.model('profile', {
-  age: Number,
-  bio: String,
-  friend_type: Array,
-  interests: Array
-});
-
-module.exports = Profile;

@@ -23,6 +23,7 @@ server.use(cookieParser());
 server.use(bodyParser.urlencoded( {extended: true} ));
 server.use(bodyParser.json());
 
+// EJS Related Views
 server.set('view engine', 'ejs');
 server.set('views', __dirname + '/views');
 server.use('/public', express.static(__dirname + '/public'));
@@ -35,11 +36,11 @@ db.once('open', function(){
   console.log("DATABASE UP");
 });
 
+// SESSION & PASSPORT CONFIGURATIONS
 server.use(session({
   secret: 'ohmygoditsasecretttt',
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
+  saveUninitialized: true
 }));
 server.use(passport.initialize());
 server.use(passport.session());

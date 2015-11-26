@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    User     = require('./models/user.js');
+    User     = require('./models/user.js').
+    Profile  = require('./models/profile.js');
 
 module.exports = function(server, passport) {
   server.get('/', function(req, res){
