@@ -19,10 +19,9 @@ var express        = require('express'),
 server.use(morgan('dev'));
 server.use(methodOverride('_method'));
 server.use(cookieParser());
-server.use(bodyParser());
-server.use(bodyParser.urlencoded({extended:true}));
-server.use(bodyParser.text());
-server.use(bodyParser.json({type: 'application/vnd.api+json'}));
+
+server.use(bodyParser.urlencoded( {extended: true} ));
+server.use(bodyParser.json());
 
 server.set('view engine', 'ejs');
 server.set('views', __dirname + '/views');
@@ -36,7 +35,12 @@ db.once('open', function(){
   console.log("DATABASE UP");
 });
 
-server.use(session({ secret: 'ohmygoditsasecretttt' }));
+server.use(session({
+  secret: 'ohmygoditsasecretttt',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
 server.use(passport.initialize());
 server.use(passport.session());
 server.use(flash());

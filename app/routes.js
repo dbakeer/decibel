@@ -70,12 +70,6 @@ module.exports = function(server, passport) {
     });
   });
 
-  server.post('/form', function(req, res){
-    successRedirect: '/profile',
-    failureRedirect: '/form';
-    });
-  });
-
   ////////////////////////////
   ///// FACEBOOK LOGIN ///////
   ////////////////////////////
