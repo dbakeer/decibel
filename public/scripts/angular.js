@@ -9,6 +9,10 @@ var app = angular.module('friendApp', []);
 // this controller takes care of observing the matches you prefer
 app.controller('infoCtrl', ['$scope', 'filterFilter', '$http', function($scope, filterFilter, $http){
 
+  var controller = this;
+
+
+
   $scope.gender = [
     'Male',
     'Female',
@@ -43,10 +47,9 @@ app.controller('infoCtrl', ['$scope', 'filterFilter', '$http', function($scope, 
   }, true);
 
   $scope.getInfo = function(){
-    $http.get('/user').success(function(data){
+    $http.get('/users/:id').success(function(data){
       $scope.current_user_info = data;
       console.log(data);
-      console.log(data.user);
     });
   };
 

@@ -5,12 +5,6 @@ var userSchema = mongoose.Schema({
   local: {
     email: String,
     password: String,
-    age: Number,
-    location: String,
-    gender: String,
-    bio: String,
-    friend_types: Array,
-    interests: Object
   },
   facebook: {
     id: String,
@@ -20,6 +14,14 @@ var userSchema = mongoose.Schema({
     name: String,
     gender: String,
     picture: String
+  },
+  info: {
+    age: Number,
+    location: String,
+    gender: String,
+    bio: String,
+    friend_types: Array,
+    interests: Object
   }
 });
 
