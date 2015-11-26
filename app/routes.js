@@ -1,6 +1,5 @@
 var mongoose = require('mongoose'),
-    User     = require('./models/user.js'),
-    Profile  = require('./models/profile.js');
+    User     = require('./models/user.js');
 
 module.exports = function(server, passport) {
   server.get('/', function(req, res){
@@ -141,41 +140,46 @@ module.exports = function(server, passport) {
     });
   });
 
-  ////////////////////////////
-  ////// PROFILE ROUTES //////
-  ////////////////////////////
-  server.get('/form', function(req, res){
-    User.find(function(err, profile){
+  server.get('/users/:id', function(req, res){
+    var user = req.user;
+    var query = User.find({});
+
+    query.exec(function(err, users){
       if (err) {
         res.send(err);
       } else {
-        res.json(profile);
+        res.json(user);
       }
     });
   });
 
-  server.post('/form', function(req, res){
-    Profile.create({
-      age: req.body.age,
-      bio: req.body.bio,
-      friend_types: req.body.friend_types,
-      interests: req.body.interests
-    }, function(err, profile){
-      if (err){
-        res.send(err);
-      } else {
-        User.find(function(err, profile){
-          if (err) {
-            res.send(err);
-          } else {
-            res.json(profile);
-          }
-        });
-      }
-    });
-  });
 
-  // server.delete('/form/')
+
+  // server.get('/info', function(req, res){
+  //
+  //   query.exec(function(err, users){
+  //     if (err) {
+  //       res.send(err);
+  //     } else {
+  //       res.json(users);
+  //     }
+  //   });
+  // });
+  //
+  // server.post('/info', function(req, res){
+  //   var newInfo = new Info(req.body);
+  //   console.log(req.body);
+  //   console.log(res);
+  //
+  //   newInfo.save(function(err){
+  //     if(err){
+  //       res.send(err);
+  //       console.log(err);
+  //     } else {
+  //       res.json(req.body);
+  //     }
+  //   });
+  // });
 
 };
 

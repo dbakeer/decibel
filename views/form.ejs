@@ -16,14 +16,10 @@
   </head>
   <body>
 
-  <body ng-app="friendApp" ng-controller="profileCtrl">
-
-
-
-
+  <body ng-app="friendApp" ng-controller="infoCtrl">
 
     <!-- START FORM -->
-    <form ng-submit="addProfile()">
+    <form ng-submit="addInfo()">
       <!-- username -->
       Age<br/>
       <input type="text" ng-model="age">
@@ -55,22 +51,15 @@
       What are your interests?<br/>
       <input type="text" ng-model="interests">
       <br>
+
+      Write a quick bio!<br/>
+      <input type="text" ng-model="bio">
+      <br>
       <button type="submit">Submit</button>
     </form>
     <!-- END FORM -->
 
-    <!-- START MATCH VIEWS -->
-    <div ng-repeat="profile in profiles">
-      {{profile.username}}<br/>
-      {{profile.location}}<br/>
-      {{profile.gender}}<br/>
-      {{profile.interests}}<br/>
-      <div ng-repeat="friend_type in profile.friend_types" ng-show="friend_type.selected == true">
-        {{friend_type.desc}}<br/>
-      </div>
-      {{profile.about}}<br/>
-    </div>
-    <!-- END MATCH VIEWS -->
+    <div ng-repeat=""
 
   </body>
 </html>

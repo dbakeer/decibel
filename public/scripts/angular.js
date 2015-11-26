@@ -3,11 +3,11 @@
 var app = angular.module('friendApp', []);
 
 /////////////////////////////////
-/////// PROFILE CONTROLLER //////
+///// INFORMATION CONTROLLER ////
 /////////////////////////////////
 
 // this controller takes care of observing the matches you prefer
-app.controller('profileCtrl', ['$scope', 'filterFilter', '$http', function($scope, filterFilter, $http){
+app.controller('infoCtrl', ['$scope', 'filterFilter', '$http', function($scope, filterFilter, $http){
 
   $scope.gender = [
     'Male',
@@ -42,22 +42,50 @@ app.controller('profileCtrl', ['$scope', 'filterFilter', '$http', function($scop
     });
   }, true);
 
-  $scope.addProfile = function(){
-    var userData = {
-      username: $scope.age,
-      // location: $scope.location,
+  $scope.getInfo = function(){
+    $http.get('/user').success(function(data){
+      $scope.current_user_info = data;
+      console.log(data);
+      console.log(data.user);
+    });
+  };
+
+  $scope.getInfo();
+
+  $scope.addInfo = function(infoData){
+
+    console.log(infoData);
+    $scope.current_user_info.push({
+      info: {age: $scope.age,
+      location: $scope.location,
       gender: $scope.gender,
       interests: $scope.interests,
       friend_types: $scope.friend_types,
       about: $scope.bio
-    };
+    }
+    });
 
-    $http.post('/users', userData).success(function(data){
-      console.log(data);
-    }).error(function(data){
-      console.log(data);
+    $http.post('/user', {
+      info: {
+        age: $scope.age,
+        location: $scope.location,
+        gender: $scope.gender,
+        interests: $scope.interests,
+        friend_types: $scope.friend_types,
+        about: $scope.bio
+      }
     }).success(function(data){
       console.log(data);
+      $scope.getInfo();
     });
+
+    // $scope.deleteInfo = function(){
+    //   $http.delete('/info', + id).success(function(data){
+    //     $scope.info = data;
+    //     console.log(data);
+    //   }).error(function(data){
+    //     console.log('Error: ', + data);
+    //   });
+    // };
   };
 }]);
