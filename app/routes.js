@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-    User     = require('./models/user.js').
+    User     = require('./models/user.js'),
     Profile  = require('./models/profile.js');
 
 module.exports = function(server, passport) {
@@ -39,7 +39,7 @@ module.exports = function(server, passport) {
   });
 
   server.post('/signup', passport.authenticate('local-signup',{
-    successRedirect: '/profile',
+    successRedirect: '/main',
     failureRedirect: '/signup',
     failureFlash: true
   }));
@@ -49,7 +49,7 @@ module.exports = function(server, passport) {
   });
 
   server.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/profile',
+    successRedirect: '/main',
     failureRedirect: '/login',
     failureFlash: true
   }));
@@ -59,8 +59,8 @@ module.exports = function(server, passport) {
     res.redirect('/');
   });
 
-  server.get('/profile', isLoggedIn, function(req, res){
-    res.render('profile.ejs', {
+  server.get('/main', isLoggedIn, function(req, res){
+    res.render('main.ejs', {
       user : req.user
     });
   });
@@ -89,7 +89,7 @@ module.exports = function(server, passport) {
 
   server.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: '/profile',
+      successRedirect: '/main',
       failureRedirect: '/'
     }));
 
@@ -108,7 +108,7 @@ module.exports = function(server, passport) {
   });
 
   server.post('/connect/local', passport.authenticate('local-signup', {
-    successRedirect: '/profile',
+    successRedirect: '/main',
     failureRedirect: '/connect/local',
     failureFlash: true
   }));
@@ -117,7 +117,7 @@ module.exports = function(server, passport) {
   server.get('/connect/facebook', passport.authorize('facebook', { scope: ['email', 'public_profile', 'user_location']}));
 
   server.get('/connect/facebook/callback', passport.authorize('facebook', {
-    successRedirect: '/profile',
+    successRedirect: '/main',
     failureRedirect: '/'
   }));
 
@@ -129,7 +129,7 @@ module.exports = function(server, passport) {
     user.local.email = undefined;
     user.local.password = undefined;
     user.save(function(err){
-      res.redirect('/profile');
+      res.redirect('/main');
     });
   });
 
@@ -137,9 +137,45 @@ module.exports = function(server, passport) {
     var user = req.user;
     user.facebook.token = undefined;
     user.save(function(err){
-      res.redirect('/profile');
+      res.redirect('/main');
     });
   });
+
+  ////////////////////////////
+  ////// PROFILE ROUTES //////
+  ////////////////////////////
+  server.get('/form', function(req, res){
+    User.find(function(err, profile){
+      if (err) {
+        res.send(err);
+      } else {
+        res.json(profile);
+      }
+    });
+  });
+
+  server.post('/form', function(req, res){
+    Profile.create({
+      age: req.body.age,
+      bio: req.body.bio,
+      friend_types: req.body.friend_types,
+      interests: req.body.interests
+    }, function(err, profile){
+      if (err){
+        res.send(err);
+      } else {
+        User.find(function(err, profile){
+          if (err) {
+            res.send(err);
+          } else {
+            res.json(profile);
+          }
+        });
+      }
+    });
+  });
+
+  // server.delete('/form/')
 
 };
 
