@@ -6,7 +6,7 @@ module.exports = function(server, passport) {
     res.render('index.ejs');
   });
 
-  server.get('/user', function(req, res){
+  server.get('/users', function(req, res){
     var query = User.find({});
 
     query.exec(function(err, users){
@@ -18,7 +18,7 @@ module.exports = function(server, passport) {
     });
   });
 
-  server.post('/user', function(req, res){
+  server.post('/users', function(req, res){
     var newUser = new User(req.body);
 
     newUser.save(function(err){

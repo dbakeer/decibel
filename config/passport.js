@@ -25,6 +25,7 @@ module.exports = function(passport) {
     },
     function(req, email, password, done){
       process.nextTick(function(){
+
         User.findOne({
           'local.email' : email
         },
@@ -88,7 +89,8 @@ module.exports = function(passport) {
     clientID        : config.facebookAuth.clientID,
     clientSecret    : config.facebookAuth.clientSecret,
     callbackURL     : config.facebookAuth.callbackURL,
-    passReqToCallback : true
+    passReqToCallback : true,
+    profileFields: ['id', 'email', 'gender', 'location', 'name', 'photos']
   },
 
   function(req, token, refreshToken, profile, done) {
@@ -106,6 +108,8 @@ module.exports = function(passport) {
             if(!user.facebook.token) {
               user.facebook.token = token;
               user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
+              user.facebook.gender = profile.gender;
+              user.facebook.picture = profile.photos[0].value;
 
               user.save(function(err){
                 if (err)
@@ -119,6 +123,9 @@ module.exports = function(passport) {
             newUser.facebook.id    = profile.id;
             newUser.facebook.token = token;
             newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
+            newUser.facebook.email = profile.emails[0].value;
+            newUser.facebook.gender = profile.gender;
+            newUser.facebook.picture = profile.photos[0].value;
 
             newUser.save(function(err) {
               if (err)
@@ -134,6 +141,9 @@ module.exports = function(passport) {
         user.facebook.id    = profile.id;
         user.facebook.token = token;
         user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
+        user.facebook.email = profile.emails[0].value;
+        user.facebook.gender = profile.gender;
+        user.facebook.picture = profile.photos[0].value;
 
         user.save(function(err) {
           if (err)

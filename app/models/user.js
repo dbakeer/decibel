@@ -4,21 +4,21 @@ var mongoose = require('mongoose'),
 var userSchema = mongoose.Schema({
   local: {
     email: String,
-    password: String
-  },
-  facebook: {
-    id: String,
-    token: String,
-    email: String,
-    name: String,
-    picture: String
-  },
-  info: {
-    gender: String,
+    password: String,
     age: Number,
     bio: String,
     friend_type: Array,
     interests: Array
+  },
+  facebook: {
+    id: String,
+    token: String,
+    username: String,
+    email: String,
+    name: String,
+    gender: String,
+    location: String,
+    picture: String
   }
 });
 
