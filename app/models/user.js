@@ -2,17 +2,16 @@ var mongoose = require('mongoose'),
     Schema   = mongoose.Schema,
     bcrypt   = require('bcrypt-nodejs');
 
-var userSchema = new Schema({
+var UserSchema = new Schema({
+  age: Number,
+  location: String,
+  gender: String,
+  friend_types: Object,
+  bio: String,
   local: {
-    email: String,
-    // password: String,
-    // age: Number,
-    // location: String,
-    // gender: String,
-    // bio: String,
-    // friend_types: Array,
-    // interests: Object,
-    // type: Schema.ObjectId
+    id: String,
+    username: String,
+    password: String
   },
   facebook: {
     id: String,
@@ -21,16 +20,17 @@ var userSchema = new Schema({
     email: String,
     name: String,
     gender: String,
-    picture: String
+    picture: String,
+    location: String
   }
 });
 
-userSchema.methods.generateHash = function(password) {
+UserSchema.methods.generateHash = function(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
-userSchema.methods.validPassword = function(password) {
+UserSchema.methods.validPassword = function(password) {
   return bcrypt.compareSync(password, this.local.password);
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', UserSchema);

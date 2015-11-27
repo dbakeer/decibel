@@ -9,7 +9,7 @@ module.exports = function(passport) {
     /////// LOCAL SIGNUP ///////
     ////////////////////////////
     passport.serializeUser(function(user, done) {
-        done(null, user.id);
+        done(null, user);
     });
 
     passport.deserializeUser(function(id, done) {
@@ -96,6 +96,7 @@ module.exports = function(passport) {
   function(req, token, refreshToken, profile, done) {
 
     process.nextTick(function() {
+      console.log(profile);
 
       if (!req.user) {
 
@@ -110,7 +111,6 @@ module.exports = function(passport) {
               user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
               user.facebook.gender = profile.gender;
               user.facebook.picture = profile.photos[0].value;
-              user.facebook.location = profile.user_location;
 
               user.save(function(err){
                 if (err)
@@ -127,7 +127,6 @@ module.exports = function(passport) {
             newUser.facebook.email = profile.emails[0].value;
             newUser.facebook.gender = profile.gender;
             newUser.facebook.picture = profile.photos[0].value;
-            newUser.facebook.location = profile.user_location;
 
             newUser.save(function(err) {
               if (err)
@@ -146,7 +145,6 @@ module.exports = function(passport) {
         user.facebook.email = profile.emails[0].value;
         user.facebook.gender = profile.gender;
         user.facebook.picture = profile.photos[0].value;
-        user.facebook.location = profile.user_location;
 
         user.save(function(err) {
           if (err)

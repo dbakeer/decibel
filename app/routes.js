@@ -35,20 +35,6 @@ module.exports = function(server, passport) {
     });
   });
 
-  // query an individual user by id
-  server.get('/users/:id', function(req, res){
-   var id = req.body.user;
-   var query = User.findOne({});
-
-   query.exec(function(err, user){
-     if (err) {
-       res.send(err);
-     } else {
-       res.json(user);
-     }
-   });
- });
-
   ////////////////////////////
   /////// LOCAL LOGIN ////////
   ////////////////////////////
@@ -88,17 +74,10 @@ module.exports = function(server, passport) {
     });
   });
 
-  // the form for the profile
-  server.get('/form', isLoggedIn, function(req, res){
-    res.render('form.ejs', {
-      user : req.user
-    });
-  });
-
   ////////////////////////////
   ///// FACEBOOK LOGIN ///////
   ////////////////////////////
-  server.get('/auth/facebook', passport.authenticate('facebook', { scope:  'email' }));
+  server.get('/auth/facebook', passport.authenticate('facebook', { scope:  ['email', 'public_profile', 'user_location'] }));
 
   server.get('/auth/facebook',
   passport.authenticate('facebook', {
@@ -165,6 +144,27 @@ module.exports = function(server, passport) {
     });
   });
 
+  server.get('/form', function(req, res){
+    res.render('form.ejs');
+  });
+
+  // query an individual user by id
+  server.get('/user/:id', function(req, res){
+   var id = req.body.user;
+   var query = User.findOne({});
+
+   query.exec(function(err, user){
+     if (err) {
+       res.send(err);
+     } else {
+       res.json(user);
+     }
+   });
+ });
+
+ server.post('/user/:id', function(req, res){
+
+ });
 };
 
 function isLoggedIn(req, res, next) {

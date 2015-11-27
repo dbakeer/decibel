@@ -53,11 +53,12 @@
                   <strong>name</strong>: <%= user.facebook.name %><br>
                   <strong>gender</strong>: <%= user.facebook.gender %><br>
                   <strong>picture</strong>: <img src="<%= user.facebook.picture %>"><br>
+                  <strong>location</strong>: <%= user.facebook.location %>
                 </p>
 
                 <a href="/unlink/facebook" class="btn btn-primary">Unlink</a>
                 <% } else { %>
-                  <a href="/connect/facebook" class="btn btn-primary">Connect Facebook</a>
+                  <a href="/connect/facebook" class="btn btn-primary">Connect Your Facebook Account to Get Started</a>
                 <% } %>
               </div>
             </div>
