@@ -141,8 +141,8 @@ module.exports = function(server, passport) {
   });
 
   server.get('/users/:id', function(req, res){
-    var user = req.user;
-    var query = User.find({});
+    var id = req.body.user;
+    var query = User.findOne({});
 
     query.exec(function(err, user){
       if (err) {

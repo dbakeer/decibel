@@ -46,8 +46,8 @@ app.controller('infoCtrl', ['$scope', 'filterFilter', '$http', function($scope, 
     });
   }, true);
 
-  $scope.getInfo = function(){
-    $http.get('/users').success(function(data){
+  $scope.getInfo = function(id){
+    $http.get('/users/:id').success(function(data){
       $scope.current_user_info = data;
       console.log(data);
       console.log($scope.current_user_info.info);
