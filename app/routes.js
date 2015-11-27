@@ -1,11 +1,15 @@
 var mongoose = require('mongoose'),
     User     = require('./models/user.js');
 
+
 module.exports = function(server, passport) {
+
+  // render the index page
   server.get('/', function(req, res){
     res.render('index.ejs');
   });
 
+  // get all users
   server.get('/users', function(req, res){
     var query = User.find({});
 
@@ -18,6 +22,7 @@ module.exports = function(server, passport) {
     });
   });
 
+  // post a new user
   server.post('/users', function(req, res){
     var newUser = new User(req.body);
 
@@ -30,9 +35,25 @@ module.exports = function(server, passport) {
     });
   });
 
+  // query an individual user by id
+  server.get('/users/:id', function(req, res){
+   var id = req.body.user;
+   var query = User.findOne({});
+
+   query.exec(function(err, user){
+     if (err) {
+       res.send(err);
+     } else {
+       res.json(user);
+     }
+   });
+ });
+
   ////////////////////////////
   /////// LOCAL LOGIN ////////
   ////////////////////////////
+
+  // sign up locally
   server.get('/signup', function(req, res){
     res.render('signup.ejs', { message: req.flash('signupMessage')});
   });
@@ -43,6 +64,7 @@ module.exports = function(server, passport) {
     failureFlash: true
   }));
 
+  // login locally
   server.get('/login', function(req, res){
     res.render('login.ejs', { message: req.flash('loginMessage')});
   });
@@ -53,17 +75,20 @@ module.exports = function(server, passport) {
     failureFlash: true
   }));
 
+  // logout locally
   server.get('/logout', function(req, res){
     req.logout();
     res.redirect('/');
   });
 
+  // the main profile page
   server.get('/main', isLoggedIn, function(req, res){
     res.render('main.ejs', {
       user : req.user
     });
   });
 
+  // the form for the profile
   server.get('/form', isLoggedIn, function(req, res){
     res.render('form.ejs', {
       user : req.user
@@ -139,47 +164,6 @@ module.exports = function(server, passport) {
       res.redirect('/main');
     });
   });
-
-  server.get('/users/:id', function(req, res){
-    var id = req.body.user;
-    var query = User.findOne({});
-
-    query.exec(function(err, user){
-      if (err) {
-        res.send(err);
-      } else {
-        res.json(user);
-      }
-    });
-  });
-
-
-
-  // server.get('/info', function(req, res){
-  //
-  //   query.exec(function(err, users){
-  //     if (err) {
-  //       res.send(err);
-  //     } else {
-  //       res.json(users);
-  //     }
-  //   });
-  // });
-  //
-  // server.post('/info', function(req, res){
-  //   var newInfo = new Info(req.body);
-  //   console.log(req.body);
-  //   console.log(res);
-  //
-  //   newInfo.save(function(err){
-  //     if(err){
-  //       res.send(err);
-  //       console.log(err);
-  //     } else {
-  //       res.json(req.body);
-  //     }
-  //   });
-  // });
 
 };
 

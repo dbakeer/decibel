@@ -9,21 +9,8 @@ var app = angular.module('friendApp', []);
 // this controller takes care of observing the matches you prefer
 app.controller('infoCtrl', ['$scope', 'filterFilter', '$http', function($scope, filterFilter, $http){
 
-  var controller = this;
 
-
-
-  $scope.gender = [
-    'Male',
-    'Female',
-    'Other',
-    'Prefer Not to Say'
-  ];
-
-  $scope.interests = [];
-
-  $scope.bio = '';
-
+  // managing the friend types
   $scope.friend_types = [
     { desc: 'New Friends', selected: false },
     { desc: 'Best Friend', selected: false },
@@ -46,41 +33,34 @@ app.controller('infoCtrl', ['$scope', 'filterFilter', '$http', function($scope, 
     });
   }, true);
 
-  $scope.getInfo = function(id){
+
+
+  // getting the current user's data
+  $scope.getInfo = function(){
     $http.get('/users/:id').success(function(data){
-      $scope.current_user_info = data;
+      $scope.current_user = data;
       console.log(data);
-      console.log($scope.current_user_info.info);
+      console.log(data.local);
     });
   };
 
   $scope.getInfo();
 
-  $scope.addInfo = function(infoData){
-    console.log(infoData);
+  $scope.addProfile = function(){
+    console.log($scope.current_user);
+    console.log($scope.current_user.local);
 
-    $http.post('/users/' + $scope.current_user_info._id + '/info', {
-      info: {
-        age: $scope.age,
-        location: $scope.location,
-        gender: $scope.gender,
-        interests: $scope.interests,
-        friend_types: $scope.friend_types,
-        about: $scope.bio
-      }
-    }).success(function(data){
-      $scope.current_user_info.info.push({
-        info: {
-          age: $scope.age,
-          location: $scope.location,
-          gender: $scope.gender,
-          interests: $scope.interests,
-          friend_types: $scope.friend_types,
-          about: $scope.bio
-        }
-      });
-      console.log(data);
-      $scope.getInfo();
+    $http.post('/users/' + $scope.current_user._id, {
+      age: $scope.age,
+      location: $scope.location,
+      gender: $scope.gender,
+      interests: $scope.interests,
+      friend_types: $scope.friend_types,
+      about: $scope.bio
+    }).success(function(infoData){
+      console.log(infoData);
+    }).error(function(err){
+      console.log(err);
     });
 
     // $scope.deleteInfo = function(){
@@ -91,5 +71,7 @@ app.controller('infoCtrl', ['$scope', 'filterFilter', '$http', function($scope, 
     //     console.log('Error: ', + data);
     //   });
     // };
+
+
   };
 }]);
