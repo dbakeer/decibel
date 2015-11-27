@@ -144,7 +144,7 @@ module.exports = function(server, passport) {
     var user = req.user;
     var query = User.find({});
 
-    query.exec(function(err, users){
+    query.exec(function(err, user){
       if (err) {
         res.send(err);
       } else {

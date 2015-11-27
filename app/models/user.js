@@ -20,7 +20,7 @@ var userSchema = mongoose.Schema({
     location: String,
     gender: String,
     bio: String,
-    friend_types: Array,
+    friend_types: Object,
     interests: Object
   }
 });
