@@ -163,15 +163,14 @@ module.exports = function(server, passport) {
  });
 
  server.post('/users/:id', function(req, res){
-   var user = req.body.user;
-
-   var age = req.body.age;
-   var gender = req.body.gender;
-   var location = req.body.location;
-   var friend_types = req.body.friend_types;
-   var bio = req.body.bio;
-   var interests = req.body.interests;
-
+   var user = {
+     age : req.body.age,
+     gender : req.body.gender,
+     location : req.body.location,
+     friend_types : req.body.friend_types,
+     bio : req.body.bio,
+     interests : req.body.interests
+   };
    user.save(function(err){
      res.redirect('/main');
      console.log(err);
