@@ -1,11 +1,23 @@
-var app = angular.module('friendApp', ['ngRoute']);
+var app = angular.module('friendApp', ['ngRoute', 'ngResource']);
 
 // defining some posts
-app.factory('posts', [function(){
+app.factory('posts', ['$http', function($http){
   var list = {
     posts: []
   };
   return list;
+
+  list.getAll = function(){
+    return $http.get('/posts').success(function(data){
+      angular.copy(data, list.posts);
+    });
+  };
+
+  list.create = function(post){
+    return $http.post('/posts', post).success(function(data){
+      list.posts.push(data);
+    });
+  };
 }]);
 
 
@@ -18,16 +30,13 @@ app.controller('MainCtrl', ['$scope', 'posts', function($scope, posts){
   $scope.addPost = function(){
     if(!$scope.artist || $scope.artist === ''){ return; }
 
-    $scope.posts.push({
+    posts.create({
       artist: $scope.artist,
       location: $scope.location,
       show_date: $scope.show_date,
       body: $scope.body,
       attendance: 0,
-      comments: [
-        {author: 'eh', body: 'eh'},
-        {author: '1', body: '1'}
-      ]
+      comments: []
     });
     $scope.artist = '';
     $scope.location = '';
@@ -52,28 +61,23 @@ app.controller('MainCtrl', ['$scope', 'posts', function($scope, posts){
 }]);
 
 
-
-
-app.controller('PostsCtrl', ['$scope', '$routeParams', 'posts', function($scope, $routeParams, posts){
-
-  $scope.post = posts.posts[$routeParams.id];
-
-
-}]);
-
-
-
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
-  $locationProvider.html5Mode({enabled:true});
 
   $routeProvider.
   when('/main', {
-    templateUrl: '../views/main.ejs',
+    templateUrl: '../views/main',
+    controller: 'MainCtrl',
+    resolve: {
+      postPromise: ['posts', function(posts){
+        return posts.getAll();
+      }]
+    }
+  }).when('/posts', {
+    templateUrl: '../views/partials/posts',
     controller: 'MainCtrl'
-  }).when('/posts/{id}', {
-    templateUrl: '../views/partials/posts.ejs',
-    controller: 'PostsCtrl'
   }).otherwise({
     redirectTo: '../views/profile.ejs'
   });
+
+  $locationProvider.html5Mode({enabled:true});
 }]);

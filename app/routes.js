@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
-    User     = require('./models/user.js').
-    Post     = require('./models/posts.js');
+    User     = require('./models/user.js'),
+    Post     = require('./models/posts.js'),
+    Comment  = require('./models/comments.js');
 
 
 module.exports = function(server, passport) {
@@ -150,8 +151,85 @@ module.exports = function(server, passport) {
     });
   });
 
-  server.get('/form', function(req, res){
-    res.render('form.ejs');
+  server.get('/posts', function(req, res, next){
+    Post.find(function(err, posts){
+      if (err){
+        return next(err);
+      }
+      res.json(posts);
+    });
+  });
+
+  server.post('/posts', function(req, res, next){
+    var post = new Post(req.body);
+
+    post.save(function(err, post){
+      if (err) {
+        return next(err);
+      }
+      res.json(post);
+    });
+  });
+
+  server.param('post', function(req, res, next, id){
+    var query = Post.findById(id);
+
+    query.exec(function(err, post){
+      if (err){
+        return next(err);
+      } if (!post) {
+        return next(new Error('no post'));
+      }
+
+      req.post = post;
+      return next();
+    });
+  });
+
+  server.get('/posts/:post', function(req, res){
+    res.json(req.post);
+  });
+
+  server.put('/posts/:post/attendance', function(req, res, next){
+    req.post.upvote(function(err, post){
+      if (err){
+        return next(err);
+      }
+      res.json(post);
+    });
+  });
+
+  server.post('/posts/:post/comments', function(req, res, next){
+    var comment = new Comment(req.body);
+    comment.post = req.post;
+
+    comment.save(function(err, comment){
+      if (err){
+        return next(err);
+      }
+
+      req.post.comments.push(comment);
+      req.post.save(function(err, post){
+        if(err){
+          return next(err);
+        }
+
+        res.json(comment);
+      });
+    });
+  });
+
+  server.get('/posts/:post/comments/:comment', function(req, res){
+    res.json(req.comment);
+  });
+
+  server.get('/posts/:post', function(req, res, next){
+    req.post.populate('comments', function(err, post){
+      if (err){
+        return next(err);
+      }
+      res.json(post);
+    });
   });
 };
 

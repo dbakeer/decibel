@@ -10,4 +10,9 @@ var PostSchema = new mongoose.Schema({
   comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
 });
 
-mongoose.model('Post', PostSchema);
+// PostSchema.methods.attendance = function(cb){
+//   this.attendance += 1;
+//   this.save(cb);
+// };
+
+module.exports = mongoose.model('Post', PostSchema);
