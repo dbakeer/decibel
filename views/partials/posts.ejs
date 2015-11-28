@@ -13,18 +13,14 @@
     {{comment.author}}<br/>
     {{comment.body}}
   </div>
-  <!-- <div ng-controller="PostsCtrl"> -->
-    <button type="button" ng-click="comments_form = !comments_form">Let them know you're going!</button>
+    <button type="button" ng-click = "comments_form = !comments_form" ng-hide="comments_form == true">Let them know you're going!</button>
     <br/>
-    <div ng-show="comments_form == true">
-    <form ng-submit="addComment()">
+    <form ng-submit="addComment()" ng-show="comments_form == true">
       <input type="text" class="form-control" placeholder="Comment" ng-model="body">
       <br/>
-      <button type="submit" class="btn btn-primary" ng-click="comments_form==false">Post</button>
-      <button type="button" class="btn btn-primary" ng-click="comments_form == false">Cancel</button>
+      <button type="submit" class="btn btn-primary" ng-click="comments_form = false">Post</button>
+      <button type="button" class="btn btn-primary" ng-click="comments_form = false">Cancel</button>
     </form>
-  </div>
-    <!-- </div> -->
   </div>
 
 
