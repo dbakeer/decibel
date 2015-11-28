@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    User     = require('./models/user.js');
+    User     = require('./models/user.js').
+    Post     = require('./models/posts.js');
 
 
 module.exports = function(server, passport) {
@@ -7,6 +8,11 @@ module.exports = function(server, passport) {
   // render the index page
   server.get('/', function(req, res){
     res.render('index.ejs');
+  });
+
+  // render the main page
+  server.get('/main', function(req, res){
+    res.render('main.ejs');
   });
 
   // get all users
@@ -45,7 +51,7 @@ module.exports = function(server, passport) {
   });
 
   server.post('/signup', passport.authenticate('local-signup',{
-    successRedirect: '/main',
+    successRedirect: '/profile',
     failureRedirect: '/signup',
     failureFlash: true
   }));
@@ -56,7 +62,7 @@ module.exports = function(server, passport) {
   });
 
   server.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/main',
+    successRedirect: '/profile',
     failureRedirect: '/login',
     failureFlash: true
   }));
@@ -67,9 +73,9 @@ module.exports = function(server, passport) {
     res.redirect('/');
   });
 
-  // the main profile page
-  server.get('/main', isLoggedIn, function(req, res){
-    res.render('main.ejs', {
+  // the profile page
+  server.get('/profile', isLoggedIn, function(req, res){
+    res.render('profile.ejs', {
       user : req.user
     });
   });
@@ -92,7 +98,7 @@ module.exports = function(server, passport) {
 
   server.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: '/main',
+      successRedirect: '/profile',
       failureRedirect: '/'
     }));
 
@@ -111,7 +117,7 @@ module.exports = function(server, passport) {
   });
 
   server.post('/connect/local', passport.authenticate('local-signup', {
-    successRedirect: '/main',
+    successRedirect: '/profile',
     failureRedirect: '/connect/local',
     failureFlash: true
   }));
@@ -120,7 +126,7 @@ module.exports = function(server, passport) {
   server.get('/connect/facebook', passport.authorize('facebook', { scope: ['email', 'public_profile', 'user_location']}));
 
   server.get('/connect/facebook/callback', passport.authorize('facebook', {
-    successRedirect: '/main',
+    successRedirect: '/profile',
     failureRedirect: '/'
   }));
 
@@ -129,10 +135,10 @@ module.exports = function(server, passport) {
   ////////////////////////////
   server.get('/unlink/local', function(req, res){
     var user = req.user;
-    user.local.email = undefined;
+    user.local.username = undefined;
     user.local.password = undefined;
     user.save(function(err){
-      res.redirect('/main');
+      res.redirect('/profile');
     });
   });
 
@@ -140,42 +146,13 @@ module.exports = function(server, passport) {
     var user = req.user;
     user.facebook.token = undefined;
     user.save(function(err){
-      res.redirect('/main');
+      res.redirect('/profile');
     });
   });
 
   server.get('/form', function(req, res){
     res.render('form.ejs');
   });
-
-  // query an individual user by id
-  server.get('/users/:id', function(req, res){
-   var user = req.body.user;
-   var query = User.findOne({});
-
-   query.exec(function(err, user){
-     if (err) {
-       res.send(err);
-     } else {
-       res.json(user);
-     }
-   });
- });
-
- server.post('/users/:id', function(req, res){
-   var user = {
-     age : req.body.age,
-     gender : req.body.gender,
-     location : req.body.location,
-     friend_types : req.body.friend_types,
-     bio : req.body.bio,
-     interests : req.body.interests
-   };
-   user.save(function(err){
-     res.redirect('/main');
-     console.log(err);
-   });
- });
 };
 
 function isLoggedIn(req, res, next) {

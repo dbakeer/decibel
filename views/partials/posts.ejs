@@ -1,0 +1,32 @@
+<div ng-repeat="post in posts | orderBy: '-attendance'" ng-controller="MainCtrl">
+  {{post.title}}<br/>
+  Attending: {{post.attendance}}
+  {{post.artist}}<br/>
+  {{post.location}}<br/>
+  {{post.show_date}}<br/>
+  {{post.body}}
+  <br/>
+  <div ng-hide="going == true">
+  <button type="button" ng-click="incrementAttendance(post)">I'm going!</span>
+  </div>
+  <div ng-repeat="comment in post.comments | orderBy: '-created_at'">
+    {{comment.author}}<br/>
+    {{comment.body}}
+  </div>
+  <!-- <div ng-controller="PostsCtrl"> -->
+    <button type="button" ng-click="comments_form = !comments_form">Let them know you're going!</button>
+    <br/>
+    <div ng-show="comments_form == true">
+    <form ng-submit="addComment()">
+      <input type="text" class="form-control" placeholder="Comment" ng-model="body">
+      <br/>
+      <button type="submit" class="btn btn-primary" ng-click="comments_form==false">Post</button>
+      <button type="button" class="btn btn-primary" ng-click="comments_form == false">Cancel</button>
+    </form>
+  </div>
+    <!-- </div> -->
+  </div>
+
+
+    </div>
+</div>

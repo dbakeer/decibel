@@ -1,0 +1,64 @@
+<head>
+  <% include ./partials/head %>
+</head>
+
+<body>
+  <header>
+    <% include ./partials/header %>
+  </header>
+
+
+  <body ng-app="friendApp">
+    <div class="container">
+      <div class="page-header text-center">  <h1>Here's your profile, <%= user.local.username %></h1>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+      </div>
+
+      <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+          <div class="well">
+            <h3><span class="fa fa-user"></span> Local</h3>
+
+            <% if (user.local.username) { %>
+              <p>
+                <strong>username</strong>: <%= user.local.username %><br>
+              </p>
+
+              <a href="/unlink/local" class="btn btn-default">Unlink</a>
+              <% } else { %>
+                <a href="/connect/local" class="btn btn-default">Connect Local</a>
+              <% } %>
+            </div>
+          </div>
+
+          <!-- FACEBOOK INFORMATION -->
+          <div class="col-sm-6">
+            <div class="well">
+              <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
+
+              <% if (user.facebook.token) { %>
+                <p>
+                  <strong>email</strong>: <%= user.facebook.email %><br>
+                  <strong>name</strong>: <%= user.facebook.name %><br>
+                  <strong>gender</strong>: <%= user.facebook.gender %><br>
+                  <strong>picture</strong>: <img src="<%= user.facebook.picture %>"><br>
+                  <strong>location</strong>: <%= user.facebook.location %>
+                </p>
+
+                <a href="/unlink/facebook" class="btn btn-primary">Unlink</a>
+                <% } else { %>
+                  <a href="/connect/facebook" class="btn btn-primary">Connect Your Facebook Account to Get Started</a>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer>
+          <% include ./partials/footer %>
+        </footer>
+  </body>
+
+</html>

@@ -1,70 +1,31 @@
-<html>
+<head>
+  <% include ./partials/head %>
+</head>
 
-  <head>
-    <title>Friendr</title>
+<body>
+  <header>
+    <% include ./partials/header %>
+  </header>
 
-    <!-- BOOTSTRAP -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <body ng-app="friendApp">
 
-    <!-- GOOGLE FONTS -->
-    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <div ng-controller="MainCtrl">
+    <button ng-click = "show_form = !show_form" ng-hide="show_form == true">Post about a show you're attending!</button>
+    <div ng-show="show_form">
+    <form ng-submit="addPost()">
+      Artist: <input type="text" ng-model="artist"></input><br/>
+      City/State: <input type="text" ng-model="location"></input><br/>
+      Date of the Show:<input type="date" ng-model="show_date"></input>
+      Your Message:<input type="text" ng-model="body"></input>
+      <button type="submit" ng-click="show_form = false">Submit!</button>
+      <button type="button" ng-click="show_form = false">Nevermind</button>
+    </form>
+    </div>
 
-    <!-- JAVASCRIPTZ -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-    <script src="../public/scripts/angular.js"></script>
+    <% include ./partials/posts %>
 
-  </head>
-
-
-  <body>
-    <div class="container">
-      <div class="page-header text-center">  <h1>Here's your profile, <%= user.local.email %></h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-      </div>
-
-      <div class="row">
-
-        <!-- LOCAL INFORMATION -->
-        <div class="col-sm-6">
-          <div class="well">
-            <h3><span class="fa fa-user"></span> Local</h3>
-
-            <% if (user.local.email) { %>
-              <p>
-                <strong>email</strong>: <%= user.local.email %><br>
-              </p>
-
-              <a href="/unlink/local" class="btn btn-default">Unlink</a>
-              <% } else { %>
-                <a href="/connect/local" class="btn btn-default">Connect Local</a>
-              <% } %>
-            </div>
-          </div>
-
-          <!-- FACEBOOK INFORMATION -->
-          <div class="col-sm-6">
-            <div class="well">
-              <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
-
-              <% if (user.facebook.token) { %>
-                <p>
-                  <strong>email</strong>: <%= user.facebook.email %><br>
-                  <strong>name</strong>: <%= user.facebook.name %><br>
-                  <strong>gender</strong>: <%= user.facebook.gender %><br>
-                  <strong>picture</strong>: <img src="<%= user.facebook.picture %>"><br>
-                  <strong>location</strong>: <%= user.facebook.location %>
-                </p>
-
-                <a href="/unlink/facebook" class="btn btn-primary">Unlink</a>
-                <% } else { %>
-                  <a href="/connect/facebook" class="btn btn-primary">Connect Your Facebook Account to Get Started</a>
-                <% } %>
-              </div>
-            </div>
-          </div>
-        </div>
-
+    <footer>
+      <% include ./partials/footer %>
+    </footer>
   </body>
-
 </html>

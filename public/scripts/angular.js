@@ -1,61 +1,79 @@
-// defining AngularJS logic
+var app = angular.module('friendApp', ['ngRoute']);
 
-var app = angular.module('friendApp', []);
-
-app.controller('profileCtrl', ['$scope', 'filterFilter', '$http', '$location', function($scope, filterFilter, $http, $location){
-
-
-  // managing the friend types
-  $scope.friend_types = [
-    { desc: 'New Friends', selected: false },
-    { desc: 'Best Friend', selected: false },
-    { desc: 'Drinking Buddy', selected: false },
-    { desc: 'Gaming Buddy', selected: false },
-    { desc: 'Party Friend', selected: false },
-    { desc: 'Friend with Benefits', selected: false },
-    { desc: 'New Locals', selected: false }
-  ];
-
-  $scope.selection = [];
-
-  $scope.selectedFriendTypes = function selectedFriendTypes(){
-    return filterFilter($scope.friend_types, { selected: true });
+// defining some posts
+app.factory('posts', [function(){
+  var list = {
+    posts: []
   };
+  return list;
+}]);
 
-  $scope.$watch('friend_types|filter:{selected:true}', function (nv){
-    $scope.selection = nv.map(function(friend_type){
-      return friend_type.desc;
-    });
-  }, true);
 
-  // getting the current user's data
-  $scope.getProfile = function(){
-    $http.get('/users/:id').success(function(data){
-      $scope.current_user = data;
-      $scope.current_user_profile = data.profiles;
-      console.log(data);
-      console.log(data.profiles);
-    });
-  };
 
-  $scope.getProfile();
 
-  $scope.createProfile = function(){
-    console.log($scope.current_user_profile);
+app.controller('MainCtrl', ['$scope', 'posts', function($scope, posts){
 
-    var profileData = {
-      age: $scope.age,
+  $scope.posts = posts.posts;
+
+  $scope.addPost = function(){
+    if(!$scope.artist || $scope.artist === ''){ return; }
+
+    $scope.posts.push({
+      artist: $scope.artist,
       location: $scope.location,
-      gender: $scope.gender,
-      interests: $scope.interests,
-      friend_types: $scope.friend_types,
-      about: $scope.bio
-    };
-
-    $http.post('/users/' + $scope.current_user._id, profileData).success(function(data){
-      $scope.current_user_profile.push(profileData);
-      console.log($scope.current_user_profile);
-      console.log(data);
+      show_date: $scope.show_date,
+      body: $scope.body,
+      attendance: 0,
+      comments: [
+        {author: 'eh', body: 'eh'},
+        {author: '1', body: '1'}
+      ]
     });
+    $scope.artist = '';
+    $scope.location = '';
+    $scope.show_date = '';
+    $scope.body = '';
   };
+
+  $scope.incrementAttendance = function(post){
+    post.attendance += 1;
+  };
+
+  $scope.addComment = function(){
+    console.log($scope);
+    if($scope.body === ''){return;}
+    $scope.post.comments.push({
+      body: $scope.body,
+      author: 'user'
+    });
+    $scope.body = '';
+  };
+
+}]);
+
+
+
+
+app.controller('PostsCtrl', ['$scope', '$routeParams', 'posts', function($scope, $routeParams, posts){
+
+  $scope.post = posts.posts[$routeParams.id];
+
+
+}]);
+
+
+
+app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+  $locationProvider.html5Mode({enabled:true});
+
+  $routeProvider.
+  when('/main', {
+    templateUrl: '../views/main.ejs',
+    controller: 'MainCtrl'
+  }).when('/posts/{id}', {
+    templateUrl: '../views/partials/posts.ejs',
+    controller: 'PostsCtrl'
+  }).otherwise({
+    redirectTo: '../views/profile.ejs'
+  });
 }]);

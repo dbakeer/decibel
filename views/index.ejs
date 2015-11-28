@@ -1,25 +1,17 @@
 <html>
 
   <head>
-    <title>Friendr</title>
-
-    <!-- BOOTSTRAP -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-
-    <!-- CUSTOM STYLESHEET -->
-    <link rel="stylesheet" href="../public/style.css">
-
-    <!-- GOOGLE FONTS -->
-    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <% include ./partials/head %>
   </head>
 
   <body>
+    <header>
+      <% include ./partials/header %>
+    </header>
+
     <div class="container">
 
       <div class="jumbotron text-center">
-
-        <h1 id="logo">Friendr</h1>
 
         <p>Login or Register with:</p>
 
@@ -29,6 +21,10 @@
           <span class="fa fa-user"></span> Local Signup</a>
       </div>
     </div>
+
+    <footer>
+      <% include ./partials/footer %>
+    </footer>
 
   </body>
 

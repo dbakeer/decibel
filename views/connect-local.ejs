@@ -1,18 +1,12 @@
-<html>
+<head>
+  <% include ./partials/head %>
+</head>
 
-  <head>
-    <title>Friendr</title>
+<body>
+  <header>
+    <% include ./partials/header %>
+  </header>
 
-    <!-- BOOTSTRAP -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-
-    <!-- GOOGLE FONTS -->
-    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-  </head>
-
-
-  <body>
     <div class="container">
       <div class="col-sm-6 col-sm-offset-3">
 
@@ -25,8 +19,8 @@
         <!-- LOGIN FORM -->
         <form action="/connect/local" method="post">
           <div class="form-group">
-            <label>Email</label>
-            <input type="text" class="form-control" name="email">
+            <label>Username</label>
+            <input type="text" class="form-control" name="username">
           </div>
 
           <div class="form-group">
@@ -43,6 +37,9 @@
       </div>
     </div>
 
+    <footer>
+      <% include ./partials/footer %>
+    </footer>
   </body>
 
 </html>

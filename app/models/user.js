@@ -3,11 +3,6 @@ var mongoose = require('mongoose'),
     bcrypt   = require('bcrypt-nodejs');
 
 var UserSchema = new Schema({
-  age: Number,
-  location: String,
-  gender: String,
-  friend_types: Object,
-  bio: String,
   local: {
     id: String,
     username: String,
