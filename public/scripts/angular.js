@@ -19,6 +19,12 @@ app.factory('posts', ['$http', function($http){
     }).success(console.log('Success'));
   };
 
+  list.attendance = function(post){
+    return $http.put('/posts/' + post._id + '/attendance').success(function(data){
+      post.attendees += 1;
+    });
+  };
+
     return list;
 }]);
 
@@ -28,13 +34,6 @@ app.factory('posts', ['$http', function($http){
 app.controller('MainCtrl', ['$scope', '$http', 'posts', function($scope, $http, posts){
 
   $scope.posts = posts.posts;
-
-  // $scope.getPosts = function(){
-  //   $http.get('/posts').success(function(data){
-  //     return data;
-  //     console.log(data);
-  //   });
-  // };
 
   posts.getAll();
 
@@ -56,7 +55,7 @@ app.controller('MainCtrl', ['$scope', '$http', 'posts', function($scope, $http, 
   };
 
   $scope.incrementAttendance = function(post){
-    post.attendees += 1;
+    posts.attendance(post);
   };
 
   $scope.addComment = function(){

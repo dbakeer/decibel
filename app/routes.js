@@ -175,31 +175,31 @@ module.exports = function(server, passport) {
     });
   });
 
-  // server.param('post', function(req, res, next, id){
-  //   var query = Post.findById(id);
-  //
-  //   query.exec(function(err, post){
-  //     if (err){
-  //       return next(err);
-  //     } if (!post) {
-  //       return next(new Error('no post'));
-  //     }
-  //
-  //     req.post = post;
-  //     return next();
-  //   });
-  // });
+  server.param('post', function(req, res, next, id){
+    var query = Post.findById(id);
 
-  server.get('/posts', function(req, res, next){
+    query.exec(function(err, post){
+      if (err){
+        return next(err);
+      } if (!post) {
+        return next(new Error('no post'));
+      }
+
+      req.post = post;
+      return next();
+    });
+  });
+
+  server.get('/posts/:post', function(req, res, next){
     res.json(req.post);
   });
 
-  // server.get('/posts/:post', function(req, res){
-  //   res.json(req.post);
-  // });
+  server.get('/posts/:post/attendance', function(req, res){
+    res.json(req.post);
+  });
 
-  server.put('/posts/:post/attendees', function(req, res, next){
-    req.post.attendees(function(err, post){
+  server.put('/posts/:post/attendance', function(req, res, next){
+    req.post.attendance(function(err, post){
       if (err){
         return next(err);
       }
