@@ -25,6 +25,16 @@ app.factory('posts', ['$http', function($http){
     });
   };
 
+  list.get = function(post){
+    return $http.get('/posts/' + post._id).then(function(data){
+      return res.data;
+    });
+  };
+
+  list.addComment = function(post, comment){
+    return $http.post('/posts/' + post._id + '/comments', comment);
+  };
+
     return list;
 }]);
 
@@ -59,11 +69,14 @@ app.controller('MainCtrl', ['$scope', '$http', 'posts', function($scope, $http, 
   };
 
   $scope.addComment = function(){
-    console.log($scope);
     if($scope.body === ''){return;}
-    $scope.post.comments.push({
+    console.log($scope.post);
+
+    posts.addComment($scope.post, {
       body: $scope.body,
       author: 'user'
+    }).success(function(comment){
+      $scope.post.comments.push(comment);
     });
     $scope.body = '';
   };

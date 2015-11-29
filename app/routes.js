@@ -207,6 +207,10 @@ module.exports = function(server, passport) {
     });
   });
 
+  server.get('/posts/:post/comments', function(req, res){
+    res.json(req.post);
+  });
+
   server.post('/posts/:post/comments', function(req, res, next){
     var comment = new Comment(req.body);
     comment.post = req.post;
