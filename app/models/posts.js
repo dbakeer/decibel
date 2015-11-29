@@ -6,13 +6,13 @@ var PostSchema = new Schema({
   location: { type: String, required: true },
   show_date: { type: String, required: true },
   body: { type: String, required: true },
-  attendance: { type: Number, default: 0 },
+  attendees: { type: Number, default: 0 },
   comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
 });
 
-// PostSchema.methods.attendance = function(cb){
-//   this.attendance += 1;
-//   this.save(cb);
-// };
+PostSchema.methods.attendance = function(cb){
+  this.attendees += 1;
+  this.save(cb);
+};
 
 module.exports = mongoose.model('Post', PostSchema);

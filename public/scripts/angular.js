@@ -16,10 +16,10 @@ app.factory('posts', ['$http', function($http){
   list.create = function(post){
     $http.post('/posts', post).success(function(data){
       list.posts.push(data);
-    });
+    }).success(console.log('Success'));
   };
 
-  return list;
+    return list;
 }]);
 
 
@@ -29,13 +29,14 @@ app.controller('MainCtrl', ['$scope', '$http', 'posts', function($scope, $http, 
 
   $scope.posts = posts.posts;
 
-  $scope.getPosts = function(){
-    $http.get('/posts').success(function(data){
-      console.log(data);
-    });
-  };
+  // $scope.getPosts = function(){
+  //   $http.get('/posts').success(function(data){
+  //     return data;
+  //     console.log(data);
+  //   });
+  // };
 
-  $scope.getPosts();
+  posts.getAll();
 
   $scope.addPost = function(){
     if(!$scope.artist || $scope.artist === ''){ return; }
@@ -45,33 +46,17 @@ app.controller('MainCtrl', ['$scope', '$http', 'posts', function($scope, $http, 
       location: $scope.location,
       show_date: $scope.show_date,
       body: $scope.body,
-      attendance: $scope.attendance,
+      attendees: $scope.attendees,
       comments: []
     });
-
-    // $http.post('/posts', {
-    //   post: {
-    //     artist: $scope.artist,
-    //     location: $scope.location,
-    //     show_date: $scope.show_date,
-    //     body: $scope.body,
-    //     attendance: 0,
-    //     comments: []
-    //   }
-    // }).success(function(data){
-    //   console.log(data);
-    //   $scope.posts.push(data);
-    // });
     $scope.artist = '';
     $scope.location = '';
     $scope.show_date = '';
     $scope.body = '';
   };
 
-  $scope.getPosts();
-
   $scope.incrementAttendance = function(post){
-    post.attendance += 1;
+    post.attendees += 1;
   };
 
   $scope.addComment = function(){
@@ -91,16 +76,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 
   $routeProvider.
   when('/main', {
-    templateUrl: '../views/main',
+    template: '../views/main.ejs',
     controller: 'MainCtrl',
-    resolve: {
-      postPromise: ['posts', function(posts){
-        return posts.getAll();
-      }]
-    }
-  }).when('/posts', {
-    templateUrl: '../views/partials/posts',
-    controller: 'MainCtrl'
   }).otherwise({
     redirectTo: '../views/profile.ejs'
   });

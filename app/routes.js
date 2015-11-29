@@ -161,12 +161,7 @@ module.exports = function(server, passport) {
   });
 
   server.post('/posts', function(req, res, next){
-    var post = new Post(req.body
-      // artist: req.body.artist,
-      // location: req.body.location,
-      // show_date: req.body.show_date,
-      // body: req.body.body
-    );
+    var post = new Post(req.body);
 
     post.save(function(err, post){
       if (err) {
@@ -180,31 +175,31 @@ module.exports = function(server, passport) {
     });
   });
 
-  server.param('post', function(req, res, next, id){
-    var query = Post.findById(id);
+  // server.param('post', function(req, res, next, id){
+  //   var query = Post.findById(id);
+  //
+  //   query.exec(function(err, post){
+  //     if (err){
+  //       return next(err);
+  //     } if (!post) {
+  //       return next(new Error('no post'));
+  //     }
+  //
+  //     req.post = post;
+  //     return next();
+  //   });
+  // });
 
-    query.exec(function(err, post){
-      if (err){
-        return next(err);
-      } if (!post) {
-        return next(new Error('no post'));
-      }
-
-      req.post = post;
-      return next();
-    });
-  });
-
-  server.get('/posts', function(req, res){
+  server.get('/posts', function(req, res, next){
     res.json(req.post);
   });
 
-  server.get('/posts/:post', function(req, res){
-    res.json(req.post);
-  });
+  // server.get('/posts/:post', function(req, res){
+  //   res.json(req.post);
+  // });
 
-  server.put('/posts/:post/attendance', function(req, res, next){
-    req.post.upvote(function(err, post){
+  server.put('/posts/:post/attendees', function(req, res, next){
+    req.post.attendees(function(err, post){
       if (err){
         return next(err);
       }

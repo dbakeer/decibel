@@ -22,9 +22,8 @@
     </form>
     </div>
 
-    <div ng-repeat="post in posts | orderBy: '-attendance'" ng-controller="MainCtrl">
-      {{post.title}}<br/>
-      Attending: {{post.attendance}}
+    <div ng-repeat="post in posts track by $index | orderBy: '-attendees'" ng-controller="MainCtrl">
+      Attending: {{post.attendees}}
       {{post.artist}}<br/>
       {{post.location}}<br/>
       {{post.show_date}}<br/>
