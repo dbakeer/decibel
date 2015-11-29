@@ -161,13 +161,22 @@ module.exports = function(server, passport) {
   });
 
   server.post('/posts', function(req, res, next){
-    var post = new Post(req.body);
+    var post = new Post(req.body
+      // artist: req.body.artist,
+      // location: req.body.location,
+      // show_date: req.body.show_date,
+      // body: req.body.body
+    );
 
     post.save(function(err, post){
       if (err) {
-        return next(err);
-      }
+        console.log(err);
+        res.send({
+          message: 'something went wrong'
+        });
+      } else {
       res.json(post);
+    }
     });
   });
 
@@ -184,6 +193,10 @@ module.exports = function(server, passport) {
       req.post = post;
       return next();
     });
+  });
+
+  server.get('/posts', function(req, res){
+    res.json(req.post);
   });
 
   server.get('/posts/:post', function(req, res){

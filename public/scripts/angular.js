@@ -5,27 +5,37 @@ app.factory('posts', ['$http', function($http){
   var list = {
     posts: []
   };
-  return list;
+
 
   list.getAll = function(){
-    return $http.get('/posts').success(function(data){
+    $http.get('/posts').success(function(data){
       angular.copy(data, list.posts);
     });
   };
 
   list.create = function(post){
-    return $http.post('/posts', post).success(function(data){
+    $http.post('/posts', post).success(function(data){
       list.posts.push(data);
     });
   };
+
+  return list;
 }]);
 
 
 
 
-app.controller('MainCtrl', ['$scope', 'posts', function($scope, posts){
+app.controller('MainCtrl', ['$scope', '$http', 'posts', function($scope, $http, posts){
 
   $scope.posts = posts.posts;
+
+  $scope.getPosts = function(){
+    $http.get('/posts').success(function(data){
+      console.log(data);
+    });
+  };
+
+  $scope.getPosts();
 
   $scope.addPost = function(){
     if(!$scope.artist || $scope.artist === ''){ return; }
@@ -35,14 +45,30 @@ app.controller('MainCtrl', ['$scope', 'posts', function($scope, posts){
       location: $scope.location,
       show_date: $scope.show_date,
       body: $scope.body,
-      attendance: 0,
+      attendance: $scope.attendance,
       comments: []
     });
+
+    // $http.post('/posts', {
+    //   post: {
+    //     artist: $scope.artist,
+    //     location: $scope.location,
+    //     show_date: $scope.show_date,
+    //     body: $scope.body,
+    //     attendance: 0,
+    //     comments: []
+    //   }
+    // }).success(function(data){
+    //   console.log(data);
+    //   $scope.posts.push(data);
+    // });
     $scope.artist = '';
     $scope.location = '';
     $scope.show_date = '';
     $scope.body = '';
   };
+
+  $scope.getPosts();
 
   $scope.incrementAttendance = function(post){
     post.attendance += 1;
