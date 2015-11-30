@@ -107,6 +107,10 @@ input[type=text]:focus {
   margin-left: 25%;
 }
 
+#getconnected {
+  margin-left: 25%;
+}
+
 #restofpost {
   padding-left: 15px;
 }
