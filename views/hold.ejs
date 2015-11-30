@@ -1,0 +1,38 @@
+
+
+
+
+  <div ng-repeat="post in posts track by $index | orderBy: '-attendees'" ng-controller="MainCtrl">
+    Attending: {{post.attendees}}
+    {{post.artist}}<br/>
+    {{post.location}}<br/>
+    {{post.show_date}}<br/>
+    {{post.body}}<br/>
+    {{post.author}}<br/>
+    <img src="{{post.icon}}">
+    <br/>
+    <div ng-hide="going == true">
+      <button type="button" ng-click="incrementAttendance(post)">I'm going!</span>
+      </div>
+      <div ng-repeat="comment in post.comments | orderBy: '-created_at'">
+              {{comment.body}}<br/>
+              {{comment.author}}<br/>
+              <img src="{{comment.pic}}">"
+
+            </div>
+              <button type="button" ng-click = "comments_form = !comments_form" ng-hide="comments_form == true">Let them know you're going!</button>
+              <br/>
+              <form ng-submit="addComment()" ng-show="comments_form == true">
+                <input type="text" class="form-control" placeholder="Comment" ng-model="body">
+                <br/>
+                <button type="submit" class="btn btn-primary" ng-click="comments_form = false">Post</button>
+                <button type="button" class="btn btn-primary" ng-click="comments_form = false">Cancel</button>
+              </form>
+            </div>
+
+
+              </div>
+          </div>
+
+
+        </div>

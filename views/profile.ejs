@@ -54,27 +54,29 @@
           <div id="artist">{{post.artist}}</div>
           {{post.location}} {{post.show_date | date:'MM/dd/yyyy'}}<br/>
           {{post.body}}<br/>
-          Posted by: {{post.author}} <img id="posticon" src="{{post.icon}}"><br/>
-
           <div id="attendance">
           <br/>
           Attending: {{post.attendees}}              <button type="button" ng-click="incrementAttendance(post)" id="attending">I'm going!</button>
         </div>
+          Posted by: {{post.author}} <img id="posticon" src="{{post.icon}}"><br/>
           <br/>
 
           <br/>
 
-            <div ng-repeat="comment in post.comments | orderBy: '-created_at'">
-              <img id = "commentsicon" src="{{comment.pic}}">{{comment.author}} {{comment.body}}<br/>
-
+            <div ng-repeat="comment in post.comments | orderBy: '-created_at'" id="commentsdiv">
+              <img id = "commentsicon" src="{{comment.pic}}"> {{comment.body}}<br/>
+              Posted by: {{comment.author}}<br/>
+              {{comment.created_at}}
+              <br/>
+              <br/>
                   </div>
-                    <button type="button" ng-click = "comments_form = !comments_form" ng-hide="comments_form == true">Let them know you're going!</button>
+                    <button type="button" ng-click = "comments_form = !comments_form" ng-hide="comments_form == true" id="showcomments">Let them know you're going!</button>
                     <br/>
                     <form ng-submit="addComment()" ng-show="comments_form == true">
                       <input type="text" class="form-control" placeholder="Comment" ng-model="body">
                       <br/>
-                      <button type="submit" class="btn btn-primary" ng-click="comments_form = false">Post</button>
-                      <button type="button" class="btn btn-primary" ng-click="comments_form = false">Cancel</button>
+                      <button type="submit" class="btn" id="commentsubmit" ng-click="comments_form = false">Post</button>
+                      <button type="button" class="btn" id="commentsubmit" ng-click="comments_form = false">Cancel</button>
                     </form>
                     <br/>
                     <br/>

@@ -27,6 +27,14 @@
 #allposts {
   font-size: 18px;
   margin-left: 25%;
+  border: 1px solid black;
+  width: 602px;
+}
+
+#commentsdiv {
+  padding-top: 5px;
+  border-top: black 1px solid;
+  padding-left: 2%;
 }
 
 input[type=text] {
@@ -43,14 +51,6 @@ input[type=text] {
 
 input[type=text]:focus {
  outline: none;
-}
-
-textarea {
-  border: 1px black solid;
-}
-
-textarea:focus {
-  outline: none;
 }
 
 #artist {
@@ -77,9 +77,27 @@ textarea:focus {
 #posticon {
   height: 100px;
   width: 100px;
+  border: 1px solid #ff9900;
+  border-radius: 50%;
 }
 
 #commentsicon {
   height: 50px;
   width: 50px;
+  border: 1px solid #ff9900;
+  border-radius: 50%;
+}
+
+#showcomments {
+  height: 40px;
+  width: 600px;
+  font-family: 'Fugaz One', cursive !important;
+  font-size: 24px;
+}
+
+#commentsubmit {
+  font-family: 'Fugaz One', cursive !important;
+  font-size: 24px;
+  margin-left: 25%;
+  background: #ff9900;
 }
