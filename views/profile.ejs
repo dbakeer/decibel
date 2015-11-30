@@ -55,14 +55,14 @@
           <div id="restofpost">
           {{post.location}} {{post.show_date | date:'MM/dd/yyyy'}}<br/>
           {{post.body}}<br/>
-          </div>
+
           <div id="attendance">
           <br/>
           Attending: {{post.attendees}}              <button type="button" ng-click="incrementAttendance(post)" id="attending">I'm going!</button>
         </div>
           Posted by: {{post.author}} <img id="posticon" src="{{post.icon}}"><br/>
           <br/>
-
+          </div>
           <br/>
 
           <div ng-repeat="comment in post.comments | orderBy: '-created_at'" id="commentsdiv">
