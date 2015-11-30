@@ -52,8 +52,10 @@
 
         <div ng-repeat="post in posts track by $index | orderBy: '-attendees'" ng-controller="MainCtrl" id="allposts">
           <div id="artist">{{post.artist}}</div>
+          <div id="restofpost">
           {{post.location}} {{post.show_date | date:'MM/dd/yyyy'}}<br/>
           {{post.body}}<br/>
+          </div>
           <div id="attendance">
           <br/>
           Attending: {{post.attendees}}              <button type="button" ng-click="incrementAttendance(post)" id="attending">I'm going!</button>

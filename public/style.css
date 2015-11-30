@@ -106,3 +106,7 @@ input[type=text]:focus {
 #facebooklogout {
   margin-left: 25%;
 }
+
+#restofpost {
+  padding-left: 15px;
+}
