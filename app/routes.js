@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+    passport = require('passport'),
     User     = require('./models/user.js'),
     Comment  = require('./models/comments.js'),
     Post     = require('./models/posts.js');
@@ -162,6 +163,8 @@ module.exports = function(server, passport) {
 
   server.post('/posts', function(req, res, next){
     var post = new Post(req.body);
+    post.author = req.user.local.username;
+    console.log(post.author);
 
     post.save(function(err, post){
       if (err) {
@@ -214,6 +217,7 @@ module.exports = function(server, passport) {
   server.post('/posts/:post/comments', function(req, res, next){
     var comment = new Comment(req.body);
     comment.post = req.post;
+    comment.author = req.user.local.username;
 
     comment.save(function(err, comment){
       if (err){
@@ -259,14 +263,6 @@ module.exports = function(server, passport) {
     });
   });
 
-  // server.get('/posts/:post', function(req, res, next){
-  //   req.post.populate('comments', function(err, post){
-  //     if (err){
-  //       return next(err);
-  //     }
-  //     res.json(post);
-  //   });
-  // });
 };
 
 function isLoggedIn(req, res, next) {

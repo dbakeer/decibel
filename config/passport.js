@@ -1,6 +1,7 @@
 var LocalStrategy    = require('passport-local').Strategy,
     FacebookStrategy = require('passport-facebook').Strategy,
-    User             = require('../app/models/user'),
+    mongoose         = require('mongoose'),
+    User             = mongoose.model('User'),
     config           = require('./auth');
 
 module.exports = function(passport) {

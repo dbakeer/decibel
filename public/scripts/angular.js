@@ -82,7 +82,6 @@ app.controller('MainCtrl', ['$scope', '$http', 'posts', function($scope, $http, 
 
     posts.addComment($scope.post, {
       body: $scope.body,
-      author: 'user'
     }).success(function(comment){
       $scope.post.comments.push(comment);
     });
