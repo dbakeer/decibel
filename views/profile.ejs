@@ -17,6 +17,14 @@
 
 
     <% if (user.facebook.token) { %>
+      <div id="facebooklogout">
+      <a href="/unlink/facebook" class="btn btn-primary">Log Out of Facebook</a><br/>
+      (You will not be able to access posts or comments without your Facebook login.)
+      <% } else { %>
+        <a href="/connect/facebook" class="btn btn-primary">Connect Your Facebook Account to Get Started</a>
+      <% } %>
+    </div>
+    
       <div ng-controller="MainCtrl">
         <button ng-click = "show_form = !show_form" ng-hide="show_form == true" id="showpost">Post about a show you're attending!</button>
         <div ng-show="show_form" id="formdiv">
@@ -89,13 +97,7 @@
 
               </div>
 <br/>
-              <div id="facebooklogout">
-              <a href="/unlink/facebook" class="btn btn-primary">Log Out of Facebook</a><br/>
-              (You will not be able to access posts or comments without your Facebook login.)
-              <% } else { %>
-                <a href="/connect/facebook" class="btn btn-primary">Connect Your Facebook Account to Get Started</a>
-              <% } %>
-            </div>
+
 
         <footer>
           <% include ./partials/footer %>
