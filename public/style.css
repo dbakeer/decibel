@@ -101,3 +101,7 @@ input[type=text]:focus {
   margin-left: 25%;
   background: #ff9900;
 }
+
+#facebooklogout {
+  margin-left: 25%;
+}
