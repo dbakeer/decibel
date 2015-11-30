@@ -4,3 +4,82 @@
   font-size: 64px;
   color: #ff9900 !important;
 }
+
+#instructions {
+  font-family: 'Passion One', cursive;
+  text-align: center;
+  font-size: 36px;
+}
+
+#showpost {
+  height: 40px;
+  width: 600px;
+  font-family: 'Fugaz One', cursive !important;
+  font-size: 24px;
+  margin-left: 25%;
+}
+
+#formdiv {
+  font-size: 18px !important;
+  text-align: center;
+}
+
+#allposts {
+  font-size: 18px;
+  margin-left: 25%;
+}
+
+input[type=text] {
+ border-right: 0;
+ border-left: 0;
+ border-top: 0;
+ border-bottom: 1px black solid;
+ margin-left:1px;
+ padding: 5px;
+ font-size: 18px;
+ width: 600px;
+ background: transparent;
+}
+
+input[type=text]:focus {
+ outline: none;
+}
+
+textarea {
+  border: 1px black solid;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+#artist {
+  font-size: 30px;
+  background: #ff9900;
+  width: 600px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+}
+
+#attending {
+  height: 40px;
+  width: 200px;
+  font-family: 'Fugaz One', cursive !important;
+  font-size: 24px;
+  margin-left: 25%;
+}
+
+#attendance {
+  font-size: 24px;
+}
+
+#posticon {
+  height: 100px;
+  width: 100px;
+}
+
+#commentsicon {
+  height: 50px;
+  width: 50px;
+}
