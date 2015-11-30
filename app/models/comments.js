@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 var CommentSchema = new Schema({
   body: String,
   author: String,
+  pic: String,
   post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post'}
 });
 

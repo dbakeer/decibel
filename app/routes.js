@@ -164,7 +164,7 @@ module.exports = function(server, passport) {
   server.post('/posts', function(req, res, next){
     var post = new Post(req.body);
     post.author = req.user.local.username;
-    console.log(post.author);
+    post.icon = req.user.facebook.picture;
 
     post.save(function(err, post){
       if (err) {
@@ -218,6 +218,7 @@ module.exports = function(server, passport) {
     var comment = new Comment(req.body);
     comment.post = req.post;
     comment.author = req.user.local.username;
+    comment.pic = req.user.facebook.picture;
 
     comment.save(function(err, comment){
       if (err){

@@ -8,9 +8,11 @@ var PostSchema = new Schema({
   body: { type: String, required: true },
   attendees: { type: Number, default: 0 },
   author: String,
+  icon: String,
   comments: [{
     author: String,
     body: String,
+    pic: String,
     comment_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}}]
 });
 
