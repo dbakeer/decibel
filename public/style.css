@@ -94,6 +94,7 @@ input[type=text]:focus {
   width: 550px;
   font-family: 'Fugaz One', cursive !important;
   font-size: 24px;
+  margin-left: 15px;
 }
 
 #commentsubmit {
