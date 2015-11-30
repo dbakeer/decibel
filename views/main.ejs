@@ -9,7 +9,7 @@
 
   <body ng-app="friendApp">
 
-    <div ng-controller="MainCtrl">
+    <div ng-app="friendApp" ng-controller="MainCtrl">
     <button ng-click = "show_form = !show_form" ng-hide="show_form == true">Post about a show you're attending!</button>
     <div ng-show="show_form">
     <form ng-submit="addPost()">
