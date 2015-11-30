@@ -91,10 +91,9 @@ input[type=text]:focus {
 
 #showcomments {
   height: 40px;
-  width: 600px;
+  width: 550px;
   font-family: 'Fugaz One', cursive !important;
   font-size: 24px;
-  margin-right: 20px;
 }
 
 #commentsubmit {
