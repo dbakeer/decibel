@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
     User     = require('./models/user.js'),
-    Post     = require('./models/posts.js'),
-    Comment  = require('./models/comments.js');
+    Comment  = require('./models/comments.js'),
+    Post     = require('./models/posts.js');
 
 
 module.exports = function(server, passport) {
@@ -235,14 +235,38 @@ module.exports = function(server, passport) {
     res.json(req.comment);
   });
 
-  server.get('/posts/:post', function(req, res, next){
-    req.post.populate('comments', function(err, post){
+  server.get('/comments', function(req, res, next){
+    Comment.find(function(err, comments){
       if (err){
         return next(err);
       }
-      res.json(post);
+      res.json(comments);
     });
   });
+
+  server.param('comment', function(req, res, next, id){
+    var query = Comment.findById(id);
+
+    query.exec(function(err, comment){
+      if (err){
+        return next(err);
+      } if (!comment) {
+        return next(new Error('no comment'));
+      }
+
+      req.comment = comment;
+      return next();
+    });
+  });
+
+  // server.get('/posts/:post', function(req, res, next){
+  //   req.post.populate('comments', function(err, post){
+  //     if (err){
+  //       return next(err);
+  //     }
+  //     res.json(post);
+  //   });
+  // });
 };
 
 function isLoggedIn(req, res, next) {

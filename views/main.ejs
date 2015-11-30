@@ -33,8 +33,7 @@
       <button type="button" ng-click="incrementAttendance(post)">I'm going!</span>
       </div>
       <div ng-repeat="comment in post.comments | orderBy: '-created_at'">
-        {{comment.author}}<br/>
-        {{comment.body}}
+        {{comment.body}}<br/>
       </div>
         <button type="button" ng-click = "comments_form = !comments_form" ng-hide="comments_form == true">Let them know you're going!</button>
         <br/>

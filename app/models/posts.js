@@ -7,12 +7,18 @@ var PostSchema = new Schema({
   show_date: { type: String, required: true },
   body: { type: String, required: true },
   attendees: { type: Number, default: 0 },
-  comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
+  comments: [{body: String}]
 });
 
 PostSchema.methods.attendance = function(cb){
   this.attendees += 1;
   this.save(cb);
 };
+
+// PostSchema.comments = function(id, cb){
+//   this.findOne({
+//     _id: id
+//   }).populate('comments').exec(cb);
+// };
 
 module.exports = mongoose.model('Post', PostSchema);

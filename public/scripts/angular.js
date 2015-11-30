@@ -32,7 +32,15 @@ app.factory('posts', ['$http', function($http){
   };
 
   list.addComment = function(post, comment){
-    return $http.post('/posts/' + post._id + '/comments', comment);
+    return $http.post('/posts/' + post._id + '/comments', comment).success(function(data){
+      list.posts.push(data);
+    }).success(console.log('Success'));
+  };
+
+  list.getComments = function(comment){
+    return $http.get('/comments/' + comment._id).then(function(data){
+      return res.data;
+    });
   };
 
     return list;
