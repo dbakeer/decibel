@@ -20,80 +20,40 @@
 
 
   <% if (user.facebook.token) { %>
-    <!-- ENTIRE FORUM START-->
     <div ng-controller="MainCtrl">
-
-      <!-- FORM START -->
-      <button ng-click = "show_form = !show_form"
-              ng-hide="show_form == true"
-              id="showpost">
+      <button ng-click = "show_form = !show_form" ng-hide="show_form == true" id="showpost">
         Post about a show you're attending!
       </button>
-      <div ng-show="show_form"
-           id="formdiv">
+      <div ng-show="show_form" id="formdiv">
         <form ng-submit="addPost()">
           Artist
           <br/>
-          <input type="text"
-                 ng-model="artist"
-                 value="artist"
-                 id="artistform"
-                 placeholder="Artist you're seeing">
-          </input>
+          <input type="text" ng-model="artist" value="artist" id="artistform" placeholder="Artist you're seeing"></input>
           <br/>
           <br/>
           City/State
           <br/>
-          <input type="text"
-                 ng-model="location"
-                 value="location"
-                 placeholder="Which city and state?">
-          </input>
+          <input type="text" ng-model="location" value="location" placeholder="Which city and state?"></input>
           <br/>
           <br/>
           Date of the Show
           <br/>
-          <input type="date"
-                 ng-model="show_date"
-                 value="show_date">
-          </input>
+          <input type="date" ng-model="show_date" value="show_date"></input>
           <br/>
           <br/>
           Your Message
           <br/>
-          <input type="text"
-                 ng-model="body"
-                 value="body"
-                 placeholder="Looking for tickets or someone to hang out with? Request either here.">
-          </input>
+          <input type="text" ng-model="body" value="body" cols="60" rows="5" placeholder="Looking for tickets or someone to hang out with? Request either here."></input>
           <br/>
           <br/>
-          <button type="submit"
-                  ng-click="show_form = false">
-            Submit!
-          </button>
-          <button type="button"
-                  ng-click="show_form = false">
-            Nevermind
-          </button>
+          <button type="submit" ng-click="show_form = false">Submit!</button>
+          <button type="button" ng-click="show_form = false">Nevermind</button>
         </form>
       </div>
-      <!-- FORM END -->
-
-      <!-- POST START -->
-      <div ng-repeat="post in posts track by $index
-                      | orderBy: '-attendees'"
-                      ng-controller="MainCtrl"
-                      id="allposts">
-
-        <div id="artist">
-          {{post.artist}}
-        </div>
-
+      <div ng-repeat="post in posts track by $index | orderBy: '-attendees'" ng-controller="MainCtrl" id="allposts">
+        <div id="artist">{{post.artist}}</div>
         <div id="restofpost">
-          {{post.location}}
-          {{post.show_date | date:'MM/dd/yyyy'}}
-          <br/>
+          {{post.location}} {{post.show_date | date:'MM/dd/yyyy'}}<br/>
           {{post.body}}
           <br/>
 
@@ -102,63 +62,48 @@
             Attending: {{post.attendees}}
             <button type="button" ng-click="incrementAttendance(post)" id="attending">I'm going!</button>
           </div>
-
-          Posted by: {{post.author}}
-          <img id="posticon" src="{{post.icon}}">
-          <br/>
+          Posted by: {{post.author}} <img id="posticon" src="{{post.icon}}"><br/>
           <br/>
         </div>
-      </div>
-      <br/>
-      <!-- POST END -->
-
-      <!-- BEGIN COMMENTS -->
-      <div ng-repeat="comment in post.comments | orderBy: '-created_at'" id="commentsdiv">
-        <img id = "commentsicon" src="{{comment.pic}}">
-        {{comment.body}}
         <br/>
-        Posted by: {{comment.author}}
-        <br/>
-        {{comment.created_at}}
-        <br/>
-        <br/>
-        <div id="commentbutton">
-          <button type="button" ng-click = "comments_form = !comments_form" ng-hide="comments_form == true" id="showcomments">
-            Let them know you're going!
-          </button>
+        <div ng-repeat="comment in post.comments | orderBy: '-created_at'" id="commentsdiv">
+          <img id = "commentsicon" src="{{comment.pic}}"> {{comment.body}}<br/>
+          Posted by: {{comment.author}}<br/>
+          {{comment.created_at}}
           <br/>
-          <form ng-submit="addComment()" ng-show="comments_form == true">
-            <input type="text" class="form-control" placeholder="Comment" ng-model="body">
+          <br/>
+          <div>
+            <button type="button" ng-click = "comments_form = !comments_form" ng-hide="comments_form == true" id="showcomments">Let them know you're going!</button>
             <br/>
-            <button type="submit" class="btn" id="commentsubmit" ng-click="comments_form = false">Post</button>
-            <button type="button" class="btn" id="commentsubmit" ng-click="comments_form = false">Cancel</button>
-          </form>
-          <br/>
-          <br/>
+            <form ng-submit="addComment()" ng-show="comments_form == true">
+              <input type="text" class="form-control" placeholder="Comment" ng-model="body">
+              <br/>
+              <button type="submit" class="btn" id="commentsubmit" ng-click="comments_form = false">Post</button>
+              <button type="button" class="btn" id="commentsubmit" ng-click="comments_form = false">Cancel</button>
+            </form>
+            <br/>
+            <br/>
+          </div>
         </div>
       </div>
-    </div>
-    <br/>
-    <br/>
-    <!-- END COMMENTS -->
-
-    <!-- FACEBOOK LOGIN/LOGOUT -->
-    <div id="facebooklogout">
-      <a href="/unlink/facebook" class="btn btn-primary">
-        Log Out of Facebook
-      </a>
       <br/>
-      <% } else { %>
-        <div id="getconnected">
-          <a href="/connect/facebook" class="btn btn-primary">Connect Your Facebook Account to Get Started</a>
+      <br/>
+
+
+      <div id="facebooklogout">
+        <a href="/unlink/facebook" class="btn btn-primary">Log Out of Facebook</a>
+        <br/>
+        <% } else { %>
+          <div id="getconnected">
+            <a href="/connect/facebook" class="btn btn-primary">Connect Your Facebook Account to Get Started</a>
+          </div>
+          <% } %>
         </div>
-        <% } %>
-      </div>
-      <br/>
-      <!-- END FACEBOOK LOGIN/LOGOUT -->
+        <br/>
 
-      <footer>
-        <% include ./partials/footer %>
-      </footer>
 
-</body>
+        <footer>
+          <% include ./partials/footer %>
+        </footer>
+
+      </body>
